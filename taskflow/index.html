@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TaskFlow — Gestión de tareas</title>
+<link rel="stylesheet" href="style.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="noise"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">◇</span>
+      <span class="brand-name">Task<b>Flow</b></span>
+    </div>
+    <div class="stats" id="stats">
+      <div class="stat">
+        <span class="stat-num" id="statPend">0</span>
+        <span class="stat-label">pendientes</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num" id="statProg">0</span>
+        <span class="stat-label">en curso</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num" id="statDone">0</span>
+        <span class="stat-label">hechas</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout">
+
+    <!-- HERO / FORM -->
+    <section class="panel panel-form">
+      <h1 class="hero-title">El flujo de tu día,<br><span class="accent">ordenado.</span></h1>
+      <p class="hero-sub">Cargá una tarea, seguile el pulso y dejá que TaskFlow avise cuándo se vence.</p>
+
+      <form id="taskForm" class="task-form" autocomplete="off">
+        <div class="field">
+          <label for="descripcion">Descripción</label>
+          <input type="text" id="descripcion" name="descripcion" placeholder="Ej: Preparar demo del sprint" maxlength="120" required />
+          <span class="char-count" id="charCount">0 / 120</span>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="fechaLimite">Fecha límite (opcional)</label>
+            <input type="datetime-local" id="fechaLimite" name="fechaLimite" />
+          </div>
+          <button type="submit" class="btn-primary" id="submitBtn">
+            <span class="btn-text">Agregar tarea</span>
+            <span class="btn-spinner" hidden></span>
+          </button>
+        </div>
+      </form>
+
+      <div class="api-actions">
+        <button id="btnSync" class="btn-ghost">↻ Importar tareas de ejemplo (API)</button>
+        <button id="btnPersist" class="btn-ghost">☁ Guardar última tarea en API</button>
+      </div>
+    </section>
+
+    <!-- LIST -->
+    <section class="panel panel-list">
+      <div class="list-head">
+        <h2>Tus tareas</h2>
+        <input type="text" id="buscador" class="search" placeholder="Buscar… (tecleá para filtrar)" />
+      </div>
+
+      <div class="filters" id="filtros">
+        <button class="chip active" data-filter="todas">Todas</button>
+        <button class="chip" data-filter="pendiente">Pendientes</button>
+        <button class="chip" data-filter="en-progreso">En curso</button>
+        <button class="chip" data-filter="completada">Completadas</button>
+      </div>
+
+      <ul id="listaTareas" class="task-list"></ul>
+
+      <p class="empty-state" id="emptyState" hidden>No hay tareas todavía. El flujo empieza con la primera. →</p>
+    </section>
+
+  </main>
+
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
